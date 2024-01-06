@@ -93,7 +93,7 @@ namespace ApiProject.Controllers
 
             return NoContent();
         }
-        [HttpDelete("/portfolios/Delete/{id}")]
+        [HttpDelete("Delete/{id}")]
         [Authorize(Roles = "SuperAdmin")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -113,7 +113,7 @@ namespace ApiProject.Controllers
 
             return NoContent();
         }
-        [HttpPatch("/portfolios/ToggleDelete/{id}")]
+        [HttpPatch("ToggleDelete/{id}")]
         [Authorize(Roles = "SuperAdmin,Admin")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

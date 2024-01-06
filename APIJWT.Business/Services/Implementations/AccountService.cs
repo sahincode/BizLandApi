@@ -52,6 +52,7 @@ namespace APIJWT.Business.Services.Implementations
             {
                 UserName = userRegisterDto.Username,
                 Email = userRegisterDto.Email,
+                FullName=userRegisterDto.FullName
 
             };
             var result = await _userManager.CreateAsync(user, userRegisterDto.Password);
@@ -83,17 +84,17 @@ namespace APIJWT.Business.Services.Implementations
             var claims = new List<Claim>()
             {
                 new Claim(JwtRegisteredClaimNames.Sub ,user.Id),
-                new Claim("FullName" ,user.UserName),
+                new Claim("FullName" ,user.FullName),
                 new Claim(ClaimTypes.Name,user.UserName)
 
             };
             var roles = await _userManager.GetRolesAsync(user);
             claims.AddRange(roles.Select(r => new Claim(ClaimTypes.Role, r)));
-            var symmetricSecurityKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("JWT:security-key").Value));
+            var symmetricSecurityKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("JWT:Key").Value));
             var signInCreds = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
             var jwt = new JwtSecurityToken(
-                audience: _configuration.GetSection("JWT:audience").Value,
-               issuer: _configuration.GetSection("JWT:issuer").Value,
+                audience: _configuration.GetSection("JWT:Audience").Value,
+               issuer: _configuration.GetSection("JWT:Issuer").Value,
                claims: claims,
                notBefore: DateTime.UtcNow,
                expires: DateTime.UtcNow.AddHours(2),

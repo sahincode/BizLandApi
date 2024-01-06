@@ -24,6 +24,23 @@ namespace APIJWT.ProgramConfigurations
             {
                 opt.UseSqlServer(configuration.GetConnectionString("default"));
             });
+            //Repository registration 
+            services.AddScoped<IServiceRepository, ServiceRepository>();
+            services.AddScoped<IPortfolioImageRepository, PortfolioImageRepository>();
+            services.AddScoped<IWorkerRepository, WorkerRepository>();
+            services.AddScoped<IPortfolioRepository, PortfolioRepository>();
+            services.AddScoped<IProfessionRepository, ProfessionRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+
+
+            //Service registration 
+            services.AddScoped<IServiceService, ServiceService>();
+            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IPortfolioService, PortfolioService>();
+            services.AddScoped<IWorkerService, WorkerService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IProfessionService, ProfessionService>();
+            services.AddAutoMapper(typeof(MappingProfile).Assembly);
             services.AddIdentity<User, IdentityRole>(opt =>
             {
                 opt.Password.RequiredUniqueChars = 0;
@@ -50,31 +67,16 @@ namespace APIJWT.ProgramConfigurations
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
 
-                    ValidIssuer = configuration.GetSection("JWT:issuer").Value,
-                    ValidAudience = configuration.GetSection("JWT:auidience").Value,
-                    IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(configuration.GetSection("JWT:security-key").Value)),
-                    LifetimeValidator = (_, expires, token, _) => token is not null ? expires > DateTime.UtcNow : false
+                    ValidIssuer = configuration.GetSection("JWT:Issuer").Value,
+                    ValidAudience = configuration.GetSection("JWT:Audience").Value,
+                    IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(configuration.GetSection("JWT:Key").Value)),
+                    LifetimeValidator = (_, expires, token, _) => token is not null ? expires > DateTime.UtcNow : false,
 
                 };
             });
             services.AddAuthorization();
-            //Repository registration 
-            services.AddScoped<IServiceRepository, ServiceRepository>();
-            services.AddScoped<IPortfolioImageRepository, PortfolioImageRepository>();
-            services.AddScoped<IWorkerRepository, WorkerRepository>();
-            services.AddScoped<IPortfolioRepository, PortfolioRepository>();
-            services.AddScoped<IProfessionRepository, ProfessionRepository>();
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
-
-
-            //Service registration 
-            services.AddScoped<IServiceService, ServiceService>();
-            services.AddScoped<IAccountService, AccountService>();
-            services.AddScoped<IPortfolioService, PortfolioService>();
-            services.AddScoped<IWorkerService, WorkerService>();
-            services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<IProfessionService, ProfessionService>();
-            services.AddAutoMapper(typeof(MappingProfile).Assembly);
+           
+          
             services.AddSwaggerGen(opt =>
             {
                 opt.SwaggerDoc("v1", new OpenApiInfo { Title = "MyAPI", Version = "v1" });

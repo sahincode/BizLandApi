@@ -76,7 +76,7 @@ namespace APIJWT.Controllers
 
             return NoContent();
         }
-        [HttpDelete("/categories/Delete/{id}")]
+        [HttpDelete("Delete/{id}")]
         [Authorize(Roles = "SuperAdmin")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -95,7 +95,7 @@ namespace APIJWT.Controllers
 
             return NoContent();
         }
-        [HttpPatch("/categories/ToggleDelete/{id}")]
+        [HttpPatch("ToggleDelete/{id}")]
         [Authorize(Roles = "SuperAdmin,Admin")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

@@ -9,6 +9,7 @@ namespace ApiProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class WorkersController : ControllerBase
     {
         private readonly IWorkerService _workerService;
@@ -19,7 +20,7 @@ namespace ApiProject.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "User")]
+        
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Get(int id)
@@ -41,7 +42,7 @@ namespace ApiProject.Controllers
         }
 
         [HttpGet("")]
-        [Authorize(Roles = "User")]
+       
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()
         {
@@ -94,7 +95,7 @@ namespace ApiProject.Controllers
 
             return NoContent();
         }
-        [HttpDelete("/workers/Delete/{id}")]
+        [HttpDelete("Delete/{id}")]
         [Authorize(Roles = "SuperAdmin")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -114,7 +115,7 @@ namespace ApiProject.Controllers
 
             return NoContent();
         }
-        [HttpPatch("/workers/ToggleDelete/{id}")]
+        [HttpPatch("ToggleDelete/{id}")]
         [Authorize(Roles = "SuperAdmin,Admin")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
