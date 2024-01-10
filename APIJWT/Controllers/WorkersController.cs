@@ -9,7 +9,7 @@ namespace ApiProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+   
     public class WorkersController : ControllerBase
     {
         private readonly IWorkerService _workerService;

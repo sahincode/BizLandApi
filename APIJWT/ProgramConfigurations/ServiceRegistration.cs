@@ -24,6 +24,14 @@ namespace APIJWT.ProgramConfigurations
             {
                 opt.UseSqlServer(configuration.GetConnectionString("default"));
             });
+          services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    policy =>
+                    {
+                        policy.WithOrigins("https://localhost:7171");
+                    });
+            });
             //Repository registration 
             services.AddScoped<IServiceRepository, ServiceRepository>();
             services.AddScoped<IPortfolioImageRepository, PortfolioImageRepository>();
